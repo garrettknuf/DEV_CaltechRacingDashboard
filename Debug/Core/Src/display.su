@@ -1,0 +1,11 @@
+../Core/Src/display.c:15:6:Display_Init	16	static
+../Core/Src/display.c:47:6:Display_HWReset	16	static
+../Core/Src/display.c:58:6:Display_TransmitCmd	16	static
+../Core/Src/display.c:73:6:Display_TransmitParam	16	static
+../Core/Src/display.c:88:6:Display_TransmitCmdParam	16	static
+../Core/Src/display.c:97:6:Display_SetWindow	32	static
+../Core/Src/display.c:150:6:Display_DrawRect	40	static
+../Core/Src/display.c:175:6:Display_DrawPixel	32	static
+../Core/Src/display.c:192:6:Display_FillScreen	32	static
+../Core/Src/display.c:218:6:Display_ClearScreen	16	static
+../Core/Src/display.c:222:6:Display_Image	40	static
