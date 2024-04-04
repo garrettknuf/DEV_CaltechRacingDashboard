@@ -1,13 +1,12 @@
 /*
- * @file img.h
+ * @file img.c
  * @brief Pixel data for displaying images
  *
  * @author Garrett Knuf
  * @date 4/1/2024
  */
 
-#ifndef SRC_IMG_H_
-#define SRC_IMG_H_
+#include <stdint.h>
 
 /**
  * @brief Caltech racing logo image data
@@ -18,7 +17,7 @@
  * 	Format (MSB to LSB): 0-0-R1-G1-B1-R2-G2-B2
  * 	After setting display window, pixels should be written to display in order
  */
-static uint8_t caltech_racing_logo_img[18923] = {
+uint8_t caltech_racing_logo_img[18923] = {
 	0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000,
 	0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000,
 	0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000,
@@ -1912,5 +1911,3 @@ static uint8_t caltech_racing_logo_img[18923] = {
 	0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000,
 	0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000,
 	0b00000000, 0b00000000, 0b00000000};
-
-#endif /* SRC_IMG_H_ */

@@ -32,6 +32,7 @@ void Display_Init(SPI_HandleTypeDef *hspi)
 	Display_TransmitCmdParam(hspi, DISPLAY_INTPXLFMT, 0x01);
 
 	/* Memory access control sets scanning direction of frame memory */
+	// was 0x08
 	Display_TransmitCmdParam(hspi, DISPLAY_MEMACTRL, 0x08);
 
 	/* TODO modify positive, negative, and digital gamma settings */
@@ -112,13 +113,13 @@ void Display_SetWindow(SPI_HandleTypeDef *hspi, uint16_t xs, uint16_t ys, uint16
 	HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_RESET);
 
 	/* Write column start and end data */
-	uint8_t byte = xs >> 8;	// SC[15:8]
+	uint8_t byte = ys >> 8;	// SC[15:8]
 	HAL_SPI_Transmit(hspi, &byte, sizeof(uint8_t), SPI_TIMEOUT_MS);
-	byte = xs & 0xFF;		// SC[7:0]
+	byte = ys & 0xFF;		// SC[7:0]
 	HAL_SPI_Transmit(hspi, &byte, sizeof(uint8_t), SPI_TIMEOUT_MS);
-	byte = xe >> 8;			// EC[15:8]
+	byte = ye >> 8;			// EC[15:8]
 	HAL_SPI_Transmit(hspi, &byte, sizeof(uint8_t), SPI_TIMEOUT_MS);
-	byte = xe & 0xFF;		// EC[7:0]
+	byte = ye & 0xFF;		// EC[7:0]
 	HAL_SPI_Transmit(hspi, &byte, sizeof(uint8_t), SPI_TIMEOUT_MS);
 
 	/* Last parameter sent so end transaction */
@@ -134,13 +135,13 @@ void Display_SetWindow(SPI_HandleTypeDef *hspi, uint16_t xs, uint16_t ys, uint16
 	HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_RESET);
 
 	/* Write page start and end data */
-	byte = ys >> 8;		// SP[15:8]
+	byte = xs >> 8;		// SP[15:8]
 	HAL_SPI_Transmit(hspi, &byte, sizeof(uint8_t), SPI_TIMEOUT_MS);
-	byte = ys & 0xFF;	// SP[7:0]
+	byte = xs & 0xFF;	// SP[7:0]
 	HAL_SPI_Transmit(hspi, &byte, sizeof(uint8_t), SPI_TIMEOUT_MS);
-	byte = ye >> 8;		// EP[15:8]
+	byte = xe >> 8;		// EP[15:8]
 	HAL_SPI_Transmit(hspi, &byte, sizeof(uint8_t), SPI_TIMEOUT_MS);
-	byte = ye & 0xFF;	// EP[7:0]
+	byte = xe & 0xFF;	// EP[7:0]
 	HAL_SPI_Transmit(hspi, &byte, sizeof(uint8_t), SPI_TIMEOUT_MS);
 
 	/* Last parameter sent so end transaction */

@@ -1,0 +1,3 @@
+../Core/Src/gfx.c:46:6:Gfx_Init	8	static
+../Core/Src/gfx.c:50:6:Gfx_SetBackground	16	static
+../Core/Src/gfx.c:55:6:Gfx_DrawDigit	40	static

@@ -1,6 +1,8 @@
 "./Core/Src/button.o"
 "./Core/Src/demo.o"
 "./Core/Src/display.o"
+"./Core/Src/gfx.o"
+"./Core/Src/img.o"
 "./Core/Src/init.o"
 "./Core/Src/led.o"
 "./Core/Src/main.o"

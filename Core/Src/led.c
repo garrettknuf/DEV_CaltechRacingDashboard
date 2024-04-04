@@ -9,7 +9,9 @@
 #include "led.h"
 
 void Led_Init(void) {
-
+	Led_Off(LED_ID_1);
+	Led_Off(LED_ID_2);
+	Led_Off(LED_ID_3);
 }
 
 void Led_On(led_id_t led_id) {

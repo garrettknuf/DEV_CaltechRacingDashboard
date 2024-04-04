@@ -66,8 +66,8 @@
 #define COLOR_CYAN		0x1A
 
 /* Display dimensions */
-#define DISPLAY_SIZE_X		320						// number of columns
-#define DISPLAY_SIZE_Y		480						// number of rows
+#define DISPLAY_SIZE_X		480						// number of columns
+#define DISPLAY_SIZE_Y		320						// number of rows
 #define DISPLAY_MAX_X		DISPLAY_SIZE_X - 1		// maximum column number
 #define DISPLAY_MAX_Y		DISPLAY_SIZE_Y - 1		// maximum row number
 #define DISPLAY_CACHE_MEM	(DISPLAY_SIZE_X * DISPLAY_SIZE_Y)	// total number of pixels
