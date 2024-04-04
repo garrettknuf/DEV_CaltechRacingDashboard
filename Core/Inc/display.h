@@ -163,6 +163,6 @@ void Display_ClearScreen(SPI_HandleTypeDef *hspi, uint16_t color);
  * Pixel data should be auto-generated with DisplayImageUtil.py script.
  */
 void Display_Image(SPI_HandleTypeDef *hspi, uint16_t x, uint16_t y,
-					uint8_t w, uint8_t h, uint8_t *pixels);
+					uint16_t w, uint16_t h, uint8_t *pixels);
 
 #endif /* INC_DISPLAY_H_ */

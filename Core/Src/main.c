@@ -30,6 +30,8 @@ int main(void)
 	MX_USART2_UART_Init();
 	MX_SPI2_Init();
 
+
+
 	/* Initialize display */
 	Display_Init(&hspi2);
 
