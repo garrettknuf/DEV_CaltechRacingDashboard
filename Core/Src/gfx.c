@@ -49,11 +49,21 @@ void Gfx_Init(void) {
 
 void Gfx_SetBackground(uint8_t color) {
 	background_color = color;
-	Display_FillScreen(&hspi2, color);
+	Gfx_DrawRect(0, 0, DISPLAY_SIZE_X, DISPLAY_SIZE_Y, color);
+}
+
+void Gfx_DrawRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint8_t color) {
+	/* Set window of rectangle */
+	Display_SetWindow(x, y, x + w - 1, y + h - 1);
+
+	/* Send pixel data */
+	Display_SendColor(w * h, color);
 }
 
 void Gfx_DrawDigit(uint16_t x, uint16_t y, uint8_t digit, uint8_t font_height, uint8_t color) {
-	if (digit < 0 || digit > 9) {
+
+	/* Digits 0-9 will map directly to display that digit, -1 will delete the digit */
+	if (digit != (uint8_t)(-1) && (digit < 0 || digit > 9)) {
 		// Do nothing if digit is not a valid value
 		return;
 	}
@@ -69,8 +79,8 @@ void Gfx_DrawDigit(uint16_t x, uint16_t y, uint8_t digit, uint8_t font_height, u
 		thickness += 2;
 	}
 
-	/* Get abcdefg pattern for digit */
-	uint8_t pattern = digit_patterns[digit];
+	/* Get abcdefg pattern for digit (or zero if digit == -1)*/
+	uint8_t pattern = (digit == (uint8_t)(-1)) ? 0 : digit_patterns[digit];
 
 	/* Active segments are set to color */
 	/* Inactive segments are set to background color */
@@ -78,30 +88,46 @@ void Gfx_DrawDigit(uint16_t x, uint16_t y, uint8_t digit, uint8_t font_height, u
 
 	// a
 	new_color = ((pattern & SEG_A_MASK) ? color : background_color);
-	Display_DrawRect(&hspi2, x+thickness, y, seg_len, thickness, new_color);
+	Gfx_DrawRect(x+thickness, y, seg_len, thickness, new_color);
 
 	// b
 	new_color = ((pattern & SEG_B_MASK) ? color : background_color);
-	Display_DrawRect(&hspi2, x+seg_len+thickness, y+thickness, thickness, seg_len, new_color);
+	Gfx_DrawRect(x+seg_len+thickness, y+thickness, thickness, seg_len, new_color);
 
 	// c
 	new_color = ((pattern & SEG_C_MASK) ? color : background_color);
-	Display_DrawRect(&hspi2, x+seg_len+thickness, y+(2*thickness)+seg_len, thickness, seg_len, new_color);
+	Gfx_DrawRect(x+seg_len+thickness, y+(2*thickness)+seg_len, thickness, seg_len, new_color);
 
 	// d
 	new_color = ((pattern & SEG_D_MASK) ? color : background_color);
-	Display_DrawRect(&hspi2, x+thickness, y+(2*thickness)+(2*seg_len), seg_len, thickness, new_color);
+	Gfx_DrawRect(x+thickness, y+(2*thickness)+(2*seg_len), seg_len, thickness, new_color);
 
 	// e
 	new_color = ((pattern & SEG_E_MASK) ? color : background_color);
-	Display_DrawRect(&hspi2, x, y+(2*thickness)+seg_len, thickness, seg_len, new_color);
+	Gfx_DrawRect(x, y+(2*thickness)+seg_len, thickness, seg_len, new_color);
 
 	// f
 	new_color = ((pattern & SEG_F_MASK) ? color : background_color);
-	Display_DrawRect(&hspi2, x, y+thickness, thickness, seg_len, new_color);
+	Gfx_DrawRect(x, y+thickness, thickness, seg_len, new_color);
 
 	// g
 	new_color = ((pattern & SEG_G_MASK) ? color : background_color);
-	Display_DrawRect(&hspi2, x+thickness, y+thickness+seg_len, seg_len, thickness, new_color);
+	Gfx_DrawRect(x+thickness, y+thickness+seg_len, seg_len, thickness, new_color);
+}
+
+void Gfx_DrawImage(image_t *img) {
+	/* Set window to display image */
+	Display_SetWindow(img->x, img->y, img->x + img->w -1, img->y + img->h - 1);
+
+	/* Send image data */
+	Display_SendData(img->data_len, img->data);
+}
+
+void Gfx_DeleteImage(image_t *img) {
+	/* Set window of image */
+	Display_SetWindow(img->x, img->y, img->x + img->w -1, img->y + img->h - 1);
+
+	/* Draw background color to delete image */
+	Gfx_DrawRect(img->x, img->y, img->w, img->h, background_color);
 
 }

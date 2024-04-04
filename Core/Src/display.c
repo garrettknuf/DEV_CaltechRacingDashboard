@@ -12,40 +12,43 @@
 /* Auto-generated includes */
 #include "main.h"
 
-void Display_Init(SPI_HandleTypeDef *hspi)
+/* External reference to display SPI handle */
+extern SPI_HandleTypeDef hspi2;
+
+void Display_Init(void)
 {
 	/* Hardware reset display */
-	Display_HWReset(hspi);
+	Display_HWReset();
 
 	/* Software reset */
-	Display_TransmitCmd(hspi, DISPLAY_SWRESET);
+	Display_TransmitCmd(DISPLAY_SWRESET);
 	HAL_Delay(250);
 
 	/* Exit sleep mode */
-	Display_TransmitCmd(hspi, DISPLAY_SLEEPOUT);
+	Display_TransmitCmd(DISPLAY_SLEEPOUT);
 	HAL_Delay(100);
 
 	/* 4-line serial interface mode control */
-	Display_TransmitCmdParam(hspi, DISPLAY_INTMCTRL, 0x00);
+	Display_TransmitCmdParam(DISPLAY_INTMCTRL, 0x00);
 
 	/* 3-bit RGB interface pixel format */
-	Display_TransmitCmdParam(hspi, DISPLAY_INTPXLFMT, 0x01);
+	Display_TransmitCmdParam(DISPLAY_INTPXLFMT, 0x01);
 
 	/* Memory access control sets scanning direction of frame memory */
 	// was 0x08
-	Display_TransmitCmdParam(hspi, DISPLAY_MEMACTRL, 0x08);
+	Display_TransmitCmdParam(DISPLAY_MEMACTRL, 0x08);
 
 	/* TODO modify positive, negative, and digital gamma settings */
 
 	/* Exit sleep mode */
-	Display_TransmitCmd(hspi, DISPLAY_SLEEPOUT);
+	Display_TransmitCmd(DISPLAY_SLEEPOUT);
 	HAL_Delay(250);
 
 	/* Turn display on */
-	Display_TransmitCmd(hspi, DISPLAY_DISPON);
+	Display_TransmitCmd(DISPLAY_DISPON);
 }
 
-void Display_HWReset(SPI_HandleTypeDef *hspi)
+void Display_HWReset(void)
 {
 	/* Hold RESET pin LOW with delay */
 	HAL_GPIO_WritePin(SPI_RESET_GPIO_Port, SPI_RESET_Pin, GPIO_PIN_RESET);
@@ -56,7 +59,7 @@ void Display_HWReset(SPI_HandleTypeDef *hspi)
 	HAL_Delay(DISPLAY_RESET_TIME_MS);
 }
 
-void Display_TransmitCmd(SPI_HandleTypeDef *hspi, uint8_t cmd)
+void Display_TransmitCmd(uint8_t cmd)
 {
 	/* DC/RS LOW since writing command */
 	HAL_GPIO_WritePin(SPI_DCRS_GPIO_Port, SPI_DCRS_Pin, GPIO_PIN_RESET);
@@ -65,13 +68,13 @@ void Display_TransmitCmd(SPI_HandleTypeDef *hspi, uint8_t cmd)
 	HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_RESET);
 
 	/* Write SPI data */
-	HAL_SPI_Transmit(hspi, &cmd, sizeof(uint8_t), SPI_TIMEOUT_MS);
+	HAL_SPI_Transmit(&hspi2, &cmd, sizeof(uint8_t), SPI_TIMEOUT_MS);
 
 	/* Set CS HIGH */
 	HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_SET);
 }
 
-void Display_TransmitParam(SPI_HandleTypeDef *hspi, uint8_t param)
+void Display_TransmitParam(uint8_t param)
 {
 	/* DC/RS HIGH since writing data */
 	HAL_GPIO_WritePin(SPI_DCRS_GPIO_Port, SPI_DCRS_Pin, GPIO_PIN_SET);
@@ -80,22 +83,22 @@ void Display_TransmitParam(SPI_HandleTypeDef *hspi, uint8_t param)
 	HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_RESET);
 
 	/* Write SPI data */
-	HAL_SPI_Transmit(hspi, &param, sizeof(uint8_t), SPI_TIMEOUT_MS);
+	HAL_SPI_Transmit(&hspi2, &param, sizeof(uint8_t), SPI_TIMEOUT_MS);
 
 	/* Set CS HIGH */
 	HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_SET);
 }
 
-void Display_TransmitCmdParam(SPI_HandleTypeDef *hspi, uint8_t cmd, uint8_t param)
+void Display_TransmitCmdParam(uint8_t cmd, uint8_t param)
 {
 	/* Send command */
-	Display_TransmitCmd(hspi, cmd);
+	Display_TransmitCmd(cmd);
 
 	/* Send parameter */
-	Display_TransmitParam(hspi, param);
+	Display_TransmitParam(param);
 }
 
-void Display_SetWindow(SPI_HandleTypeDef *hspi, uint16_t xs, uint16_t ys, uint16_t xe, uint16_t ye)
+void Display_SetWindow(uint16_t xs, uint16_t ys, uint16_t xe, uint16_t ye)
 {
 	/* Check coordinate are not out of range */
 	if ((xs > xe) || (xe > DISPLAY_MAX_X) || (ys > ye) || (ye > DISPLAY_MAX_Y)) {
@@ -104,7 +107,7 @@ void Display_SetWindow(SPI_HandleTypeDef *hspi, uint16_t xs, uint16_t ys, uint16
 	}
 
 	/* Set column range */
-	Display_TransmitCmd(hspi, DISPLAY_COLADDRSET);
+	Display_TransmitCmd(DISPLAY_COLADDRSET);
 
 	/* Set DC/RS LOW since transmitting date */
 	HAL_GPIO_WritePin(SPI_DCRS_GPIO_Port, SPI_DCRS_Pin, GPIO_PIN_SET);
@@ -114,19 +117,19 @@ void Display_SetWindow(SPI_HandleTypeDef *hspi, uint16_t xs, uint16_t ys, uint16
 
 	/* Write column start and end data */
 	uint8_t byte = ys >> 8;	// SC[15:8]
-	HAL_SPI_Transmit(hspi, &byte, sizeof(uint8_t), SPI_TIMEOUT_MS);
+	HAL_SPI_Transmit(&hspi2, &byte, sizeof(uint8_t), SPI_TIMEOUT_MS);
 	byte = ys & 0xFF;		// SC[7:0]
-	HAL_SPI_Transmit(hspi, &byte, sizeof(uint8_t), SPI_TIMEOUT_MS);
+	HAL_SPI_Transmit(&hspi2, &byte, sizeof(uint8_t), SPI_TIMEOUT_MS);
 	byte = ye >> 8;			// EC[15:8]
-	HAL_SPI_Transmit(hspi, &byte, sizeof(uint8_t), SPI_TIMEOUT_MS);
+	HAL_SPI_Transmit(&hspi2, &byte, sizeof(uint8_t), SPI_TIMEOUT_MS);
 	byte = ye & 0xFF;		// EC[7:0]
-	HAL_SPI_Transmit(hspi, &byte, sizeof(uint8_t), SPI_TIMEOUT_MS);
+	HAL_SPI_Transmit(&hspi2, &byte, sizeof(uint8_t), SPI_TIMEOUT_MS);
 
 	/* Last parameter sent so end transaction */
 	HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_SET);
 
 	/* Set page range */
-	Display_TransmitCmd(hspi, DISPLAY_PGADDRSET);
+	Display_TransmitCmd(DISPLAY_PGADDRSET);
 
 	/* Set DC/RS LOW since transmitting date */
 	HAL_GPIO_WritePin(SPI_DCRS_GPIO_Port, SPI_DCRS_Pin, GPIO_PIN_SET);
@@ -136,25 +139,22 @@ void Display_SetWindow(SPI_HandleTypeDef *hspi, uint16_t xs, uint16_t ys, uint16
 
 	/* Write page start and end data */
 	byte = xs >> 8;		// SP[15:8]
-	HAL_SPI_Transmit(hspi, &byte, sizeof(uint8_t), SPI_TIMEOUT_MS);
+	HAL_SPI_Transmit(&hspi2, &byte, sizeof(uint8_t), SPI_TIMEOUT_MS);
 	byte = xs & 0xFF;	// SP[7:0]
-	HAL_SPI_Transmit(hspi, &byte, sizeof(uint8_t), SPI_TIMEOUT_MS);
+	HAL_SPI_Transmit(&hspi2, &byte, sizeof(uint8_t), SPI_TIMEOUT_MS);
 	byte = xe >> 8;		// EP[15:8]
-	HAL_SPI_Transmit(hspi, &byte, sizeof(uint8_t), SPI_TIMEOUT_MS);
+	HAL_SPI_Transmit(&hspi2, &byte, sizeof(uint8_t), SPI_TIMEOUT_MS);
 	byte = xe & 0xFF;	// EP[7:0]
-	HAL_SPI_Transmit(hspi, &byte, sizeof(uint8_t), SPI_TIMEOUT_MS);
+	HAL_SPI_Transmit(&hspi2, &byte, sizeof(uint8_t), SPI_TIMEOUT_MS);
 
 	/* Last parameter sent so end transaction */
 	HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_SET);
 }
 
-void Display_DrawRect(SPI_HandleTypeDef *hspi, uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint8_t color)
-{
-	/* Set window of rectangle */
-	Display_SetWindow(hspi, x, y, x + w - 1, y + h - 1);
 
+void Display_SendColor(uint32_t npixels, uint8_t color) {
 	/* Set up writing to frame buffer */
-	Display_TransmitCmd(hspi, DISPLAY_MEMWR);
+	Display_TransmitCmd(DISPLAY_MEMWR);
 
 	/* Set up sending data to display */
 	HAL_GPIO_WritePin(SPI_DCRS_GPIO_Port, SPI_DCRS_Pin, GPIO_PIN_SET);
@@ -162,41 +162,24 @@ void Display_DrawRect(SPI_HandleTypeDef *hspi, uint16_t x, uint16_t y, uint16_t 
 	/* Set CS LOW to begin transaction */
 	HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_RESET);
 
-	/* Write the color to every pixel in the frame buffer. Since 3-bit RGB is
-	 * used for color there is data for 2 pixels in each byte, hence divide
-	 * the number of pixels to write to by 2 */
-	for (uint32_t i = 0; i < w * h / 2; i++) {
-		HAL_SPI_Transmit(hspi, &color, sizeof(uint8_t), SPI_TIMEOUT_MS);
+	/* If odd number of pixels pad a data byte to fill byte */
+	if (npixels % 2 != 0) {
+		npixels++;
+	}
+
+	/* 2 pixel data stored per byte, so divide npixels by 2 */
+	for (uint32_t i = 0; i < npixels / 2; i++) {
+		HAL_SPI_Transmit(&hspi2, &color, sizeof(uint8_t), SPI_TIMEOUT_MS);
 	}
 
 	/* Set CS HIGH to end transaction */
 	HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_SET);
 }
 
-void Display_DrawPixel(SPI_HandleTypeDef *hspi, uint16_t x, uint16_t y, uint8_t color)
-{
-	/* Set window to single pixel */
-	Display_SetWindow(hspi, x, x, y, y);
-
-	/* Set up sending data to display */
-	HAL_GPIO_WritePin(SPI_DCRS_GPIO_Port, SPI_DCRS_Pin, GPIO_PIN_SET);
-
-	/* Set CS LOW to begin transaction */
-	HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_RESET);
-
-	HAL_SPI_Transmit(hspi, &color, sizeof(uint8_t), SPI_TIMEOUT_MS);
-
-	/* Set CS HIGH to end transaction */
-	HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_SET);
-}
-
-void Display_FillScreen(SPI_HandleTypeDef *hspi, uint8_t color)
-{
-	/* Set entire display as window */
-	Display_SetWindow(hspi, 0, 0, DISPLAY_MAX_X, DISPLAY_MAX_Y);
+void Display_SendData(uint32_t data_len, uint8_t *data) {
 
 	/* Set up writing to frame buffer */
-	Display_TransmitCmd(hspi, DISPLAY_MEMWR);
+	Display_TransmitCmd(DISPLAY_MEMWR);
 
 	/* Set up sending data to display */
 	HAL_GPIO_WritePin(SPI_DCRS_GPIO_Port, SPI_DCRS_Pin, GPIO_PIN_SET);
@@ -204,39 +187,8 @@ void Display_FillScreen(SPI_HandleTypeDef *hspi, uint8_t color)
 	/* Set CS LOW to begin transaction */
 	HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_RESET);
 
-	/* Write the color to every pixel in the frame buffer. Since 3-bit RGB
-	 * stores color data for 2 pixels in 1 byte, the total number of data
-	 * bytes is the total number of pixels divided by 2 */
-	for (uint32_t i = 0; i < DISPLAY_CACHE_MEM / 2; i++) {
-		HAL_SPI_Transmit(hspi, &color, sizeof(uint8_t), SPI_TIMEOUT_MS);
-	}
-
-	/* Set CS HIGH to end transaction */
-	HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_SET);
-}
-
-
-void Display_ClearScreen(SPI_HandleTypeDef *hspi, uint16_t color) {
-	// TODO
-}
-
-void Display_Image(SPI_HandleTypeDef *hspi, uint16_t x, uint16_t y,
-					uint16_t w, uint16_t h, uint8_t *pixels) {
-
-	/* Set window to display image */
-	Display_SetWindow(hspi, x, y, x+w-1, y+h-1);
-
-	/* Set up writing to frame buffer */
-	Display_TransmitCmd(hspi, DISPLAY_MEMWR);
-
-	/* Set up sending data to display */
-	HAL_GPIO_WritePin(SPI_DCRS_GPIO_Port, SPI_DCRS_Pin, GPIO_PIN_SET);
-
-	/* Set CS LOW to begin transaction */
-	HAL_GPIO_WritePin(SPI_CS_GPIO_Port, SPI_CS_Pin, GPIO_PIN_RESET);
-
-	for (uint32_t i = 0; i < w*h / 2; i++) {
-		HAL_SPI_Transmit(hspi, &(pixels[i]), sizeof(uint8_t), SPI_TIMEOUT_MS);
+	for (uint32_t i = 0; i < data_len; i++) {
+		HAL_SPI_Transmit(&hspi2, &(data[i]), sizeof(uint8_t), SPI_TIMEOUT_MS);
 	}
 
 	/* Set CS HIGH to end transaction */

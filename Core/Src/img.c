@@ -7,6 +7,7 @@
  */
 
 #include <stdint.h>
+#include "img.h"
 
 /**
  * @brief Caltech racing logo image data
@@ -17,7 +18,7 @@
  * 	Format (MSB to LSB): 0-0-R1-G1-B1-R2-G2-B2
  * 	After setting display window, pixels should be written to display in order
  */
-uint8_t caltech_racing_logo_img[18923] = {
+uint8_t caltech_racing_logo_img[CALTECH_RACING_LOGO_IMG_LEN] = {
 	0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000,
 	0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000,
 	0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000, 0b00000000,

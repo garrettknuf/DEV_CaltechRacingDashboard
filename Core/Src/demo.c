@@ -9,6 +9,7 @@
 #include "display.h"
 #include "demo.h"
 
+#if DEMO_ENABLED
 
 void demo_display_fill(SPI_HandleTypeDef *hspi) {
 	/* Fill screen with various colors and wait between each one */
@@ -37,3 +38,5 @@ void demo_display_rect(SPI_HandleTypeDef *hspi) {
 	Display_DrawRect(hspi, 240, 200, 50, 50, COLOR_CYAN);
 	HAL_Delay(200);
 }
+
+#endif

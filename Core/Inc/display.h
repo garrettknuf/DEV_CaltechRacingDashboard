@@ -74,95 +74,54 @@
 
 /**
  * @brief Initialize display
- * @param hspi (SPI_HandleTypeDef *) - pointer to SPI handle
  */
-void Display_Init(SPI_HandleTypeDef *hspi);
+void Display_Init(void);
 
 /**
  * @brief Hardware reset on display
- * @param hspi (SPI_HandleTypeDef *) - pointer to SPI handle
  */
-void Display_HWReset(SPI_HandleTypeDef *hspi);
+void Display_HWReset(void);
 
 /**
  * @brief Transmit command to display
- * @param hspi (SPI_HandleTypeDef *) - pointer to SPI handle
  * @param cmd (uint8_t) - cmd to send to display
  */
-void Display_TransmitCmd(SPI_HandleTypeDef *hspi, uint8_t cmd);
+void Display_TransmitCmd(uint8_t cmd);
 
 /**
  * @brief Transmit single parameter to display
- * @param hspi (SPI_HandleTypeDef *) - pointer to SPI handle
  * @param param (uint8_t) - data to set as parameter
  */
-void Display_TransmitParam(SPI_HandleTypeDef *hspi, uint8_t param);
+void Display_TransmitParam(uint8_t param);
 
 /**
  * @brief Transmit command followed by single parameter to display
- * @param hspi (SPI_HandleTypeDef *) - pointer to SPI handle
  * @param cmd (uint8_t) - command to send
  * @param param (uint8_t) - parameter to send
  */
-void Display_TransmitCmdParam(SPI_HandleTypeDef *hspi, uint8_t cmd, uint8_t param);
+void Display_TransmitCmdParam(uint8_t cmd, uint8_t param);
 
 /**
  * @brief Set window of display
- * @param hspi (SPI_HandleTypeDef *) - pointer to SPI handle
  * @param xs (uint16_t) - starting x-column (0 <= xs <= xe)
  * @param ys (uint16_t) - starting y-page (0 <= ys <= ye)
  * @param xe (uint16_t) - ending x-column (xs <= xe <= DISPLAY_MAX_X)
  * @param ye (uint16_t) - ending y-page (ys <= ye <= DISPLAY_MAX_Y)
  */
-void Display_SetWindow(SPI_HandleTypeDef *hspi, uint16_t xs, uint16_t ys,
-						uint16_t xe, uint16_t ye);
+void Display_SetWindow(uint16_t xs, uint16_t ys, uint16_t xe, uint16_t ye);
 
 /**
- * @brief Draw rectangle on display
- * @param hspi (SPI_HandleTypeDef *) - pointer to SPI handle
- * @param x (uint16_t) - top-left corner x-position
- * @param y (uint16_t) - top-left corner y-position
- * @param w (uint16_t) - width of rectangle
- * @param h (uint16_t) - height of rectangle
+ * @brief Send color data to display
+ * @param npixels (uint32_t) - number of pixels to update
+ * @param color (uint8_t) - color of pixels
  */
-void Display_DrawRect(SPI_HandleTypeDef *hspi, uint16_t x, uint16_t y,
-						uint16_t w, uint16_t h, uint8_t color);
+void Display_SendColor(uint32_t npixels, uint8_t color);
 
 /**
- * @brief Draw pixel of specified color at coordinate (x,y)
- * @param hspi (SPI_HandleTypeDef *) - pointer to SPI handle
- * @param x (uint16_t) - x-coordinate of pixel to change (0 <= x <= DISPLAY_MAX_X)
- * @param y (uint16_t) - y-coordinate of pixel to change (0 <= y <= DISPLAY_MAX_Y)
- * @param color (uint8_t) - new color of pixel
+ * @brief Send data to the display
+ * @param data_len (uint32_t) - length of data to send
+ * @param data (uint8_t *) - pointer to data to send
  */
-void Display_DrawPixel(SPI_HandleTypeDef *hspi, uint16_t x, uint16_t y, uint8_t color);
-
-/**
- * @brief Fill entire screen with one color
- * @param hspi (SPI_HandleTypeDef *) - pointer to SPI handle
- * @param color (uint8_t) - color to fill display
- */
-void Display_FillScreen(SPI_HandleTypeDef *hspi, uint8_t color);
-
-/**
- * @brief Clear display and set it to a specified color
- * @param hspi (SPI_HandleTypeDef *) - pointer to SPI handle
- * @param color (uint16_t) - new color for display
- */
-void Display_ClearScreen(SPI_HandleTypeDef *hspi, uint16_t color);
-
-/**
- * @brief Display an image at specified coordinates with specified size
- * @param hspi (SPI_HandleTypeDef *) - pointer to SPI handle
- * @param x (uint16_t) - x-coordinate of image top-left corner
- * @param y (uint16_t) - y-coordinate of image top-left corner
- * @param w (uint8_t) - image width
- * @param h (uint8_t) - image height
- * @param pixels (uint8_t *) - pointer to array containing pixel data
- *
- * Pixel data should be auto-generated with DisplayImageUtil.py script.
- */
-void Display_Image(SPI_HandleTypeDef *hspi, uint16_t x, uint16_t y,
-					uint16_t w, uint16_t h, uint8_t *pixels);
+void Display_SendData(uint32_t data_len, uint8_t *data);
 
 #endif /* INC_DISPLAY_H_ */
