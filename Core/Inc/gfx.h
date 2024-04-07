@@ -11,6 +11,16 @@
 
 #include <stdint.h>
 
+/* Display pixel colors (3-bit RGB) (X, X, R1, G1, B1, R2,G2,B2)*/
+#define COLOR_BLACK		0x00
+#define COLOR_WHITE		0x3F
+#define COLOR_RED		0x24
+#define COLOR_GREEN		0x12
+#define COLOR_BLUE		0x09
+#define COLOR_YELLOW	0x36
+#define COLOR_PINK		0x2D
+#define COLOR_CYAN		0x1A
+
 typedef struct {
 	uint16_t x;
 	uint16_t y;

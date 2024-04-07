@@ -1,2 +1,4 @@
-../Core/Src/button.c:26:6:Button_Init	32	static
-../Core/Src/button.c:32:6:Button_Debounce	24	static
+../Core/Src/button.c:32:6:Button_Init	24	static
+../Core/Src/button.c:41:13:Button_PressedHandler	16	static
+../Core/Src/button.c:51:13:Button_ReleasedHandler	16	static
+../Core/Src/button.c:60:6:Button_Debounce	24	static
