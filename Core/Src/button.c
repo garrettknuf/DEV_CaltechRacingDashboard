@@ -30,7 +30,7 @@ static button_t btn1;
 static button_t *button_list[BTN_CNT] = {&btn1};
 
 void Button_Init(void) {
-	btn1 = (button_t){
+	btn1 = (button_t) {
 		.id = BTN_ID_1,
 		.counter = 0,
 		.port = B1_GPIO_Port,
@@ -38,6 +38,10 @@ void Button_Init(void) {
 	};
 }
 
+/**
+ * @brief Callback function when button pressed
+ * @param id (button_id_t) - id of button pressed
+ */
 static void Button_PressedHandler(button_id_t id) {
 	switch (id) {
 		case BTN_ID_1:
@@ -48,6 +52,10 @@ static void Button_PressedHandler(button_id_t id) {
 	}
 }
 
+/**
+ * @brief Callback function when button released
+ * @param id (button_id_t) - id of button released
+ */
 static void Button_ReleasedHandler(button_id_t id) {
 	switch (id) {
 		case BTN_ID_1:

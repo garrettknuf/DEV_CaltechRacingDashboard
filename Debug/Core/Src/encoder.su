@@ -1,0 +1,4 @@
+../Core/Src/encoder.c:23:6:Encoder_Init	24	static
+../Core/Src/encoder.c:45:13:Encoder_CWHandler	16	static
+../Core/Src/encoder.c:58:13:Encoder_CCWHandler	16	static
+../Core/Src/encoder.c:67:6:Encoder_Debounce	24	static

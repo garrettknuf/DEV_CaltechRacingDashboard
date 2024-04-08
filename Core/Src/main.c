@@ -14,6 +14,7 @@
 #include "button.h"
 #include "display.h"
 #include "demo.h"
+#include "encoder.h"
 #include "init.h"
 #include "led.h"
 #include "gfx.h"
@@ -41,6 +42,9 @@ int main(void)
 
 	/* Reset button controllers */
 	Button_Init();
+
+	/* Initialize rotary encoder controllers */
+	Encoder_Init();
 
 	/* Initialize display */
 	Display_Init();

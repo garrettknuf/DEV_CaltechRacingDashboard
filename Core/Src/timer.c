@@ -7,6 +7,7 @@
  */
 
 #include "button.h"
+#include "encoder.h"
 #include "led.h"
 #include "gfx.h"
 #include "ui.h"
@@ -28,6 +29,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	if (htim == &htim3) {
 		// Should be called every 1ms
 		Button_Debounce();
+		Encoder_Debounce();
 	} else if (htim == &htim2) {
 		// Should be called every 1s
 
