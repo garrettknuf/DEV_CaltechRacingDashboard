@@ -2,10 +2,11 @@ from PIL import Image
 import math
 
 """****************** UPDATE THESE PARAMS FOR YOUR IMAGE ********************"""
-image_path = 'CaltechRacingLogo.png'
-output_file_path = 'caltech_racing_logo_data.txt'
-width = 435
-height = 87
+image_path = 'DashboardBackground.png'
+output_file_path = 'dashboard_background.txt'
+variable_name = 'dashboard_background_img'
+width = 480
+height = 320
 """**************************************************************************"""
 
 if __name__ == "__main__":
@@ -24,6 +25,8 @@ if __name__ == "__main__":
 
     # Make sure in RGB mode
     img = img.convert('RGB')
+
+    img.save(variable_name + '_new.jpg')
 
     # Initialize empty pixel data list
     pixel_list = ""
@@ -67,7 +70,7 @@ if __name__ == "__main__":
                 data_arr += '\n\t'
 
     # Print data as variable in c syntax
-    output = "static uint8_t caltech_racing_logo_img[" \
+    output = "uint8_t " + variable_name + "[" \
                 + (str)((int)(len(pixel_list) / 6)) + "] = {\n"
     output += data_arr
     output += "};"

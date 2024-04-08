@@ -115,6 +115,11 @@ void Gfx_DrawDigit(uint16_t x, uint16_t y, uint8_t digit, uint8_t font_height, u
 	Gfx_DrawRect(x+thickness, y+thickness+seg_len, seg_len, thickness, new_color);
 }
 
+void Gfx_DrawNumber(uint16_t x, uint16_t y, uint8_t number, uint8_t font_height, uint8_t color) {
+	Gfx_DrawDigit(x, y, number % 10, font_height, color);
+	Gfx_DrawDigit(x + (font_height * 3 / 2), y, number / 10, font_height, color);
+}
+
 void Gfx_DrawImage(image_t *img) {
 	/* Set window to display image */
 	Display_SetWindow(img->x, img->y, img->x + img->w -1, img->y + img->h - 1);

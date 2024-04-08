@@ -19,6 +19,7 @@
 #include "gfx.h"
 #include "img.h"
 #include "timer.h"
+#include "ui.h"
 
 int main(void)
 {
@@ -32,6 +33,7 @@ int main(void)
 	MX_GPIO_Init();
 	MX_USART2_UART_Init();
 	MX_SPI2_Init();
+	MX_TIM2_Init();
 	MX_TIM3_Init();
 
 	/* Turn off all LEDs */
@@ -46,16 +48,8 @@ int main(void)
 	/* Initialize graphics unit */
 	Gfx_Init();
 
-	/* Get reference to Caltech Racing Logo image*/
-	extern uint8_t caltech_racing_logo_img[];
-	image_t team_logo_img = {
-			.x = 20,
-			.y = 120,
-			.w = 435,
-			.h = 87,
-			.data = caltech_racing_logo_img,
-			.data_len = CALTECH_RACING_LOGO_IMG_LEN
-	};
+	/* Initialize UI */
+	UI_Init();
 
 	/* Start interrupts from timer */
 	Timer_EnableInterrupts();
@@ -63,22 +57,7 @@ int main(void)
 	/* Infinite main loop */
 	while (1)
 	{
-		/* Show team logo */
-		Gfx_SetBackground(COLOR_BLACK);
-		Gfx_DrawImage(&team_logo_img);
-		HAL_Delay(2000);
-		Gfx_DeleteImage(&team_logo_img);
 
-		/* Count from 0 -9 */
-		for (uint8_t count = 0; count < 10; count++) {
-			Gfx_DrawDigit( 10, 40, count,  20, COLOR_RED);
-			Gfx_DrawDigit( 40, 40, count,  35, COLOR_PINK);
-			Gfx_DrawDigit( 80, 40, count,  50, COLOR_YELLOW);
-			Gfx_DrawDigit(140, 40, count,  80, COLOR_GREEN);
-			Gfx_DrawDigit(220, 40, count, 120, COLOR_CYAN);
-			Gfx_DrawDigit(320, 40, count, 200, COLOR_BLUE);
-			HAL_Delay(500);
-		}
 	}
 
 }

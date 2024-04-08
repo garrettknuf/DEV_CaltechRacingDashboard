@@ -28,7 +28,7 @@ Core/Src/gfx.o: ../Core/Src/gfx.c ../Core/Inc/display.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
- ../Core/Inc/gfx.h
+ ../Core/Inc/gfx.h ../Core/Inc/img.h
 ../Core/Inc/display.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
@@ -61,3 +61,4 @@ Core/Src/gfx.o: ../Core/Src/gfx.c ../Core/Inc/display.h \
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
 ../Core/Inc/gfx.h:
+../Core/Inc/img.h:

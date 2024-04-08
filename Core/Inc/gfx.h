@@ -10,6 +10,7 @@
 #define INC_GFX_H_
 
 #include <stdint.h>
+#include "img.h"
 
 /* Display pixel colors (3-bit RGB) (X, X, R1, G1, B1, R2,G2,B2)*/
 #define COLOR_BLACK		0x00
@@ -20,15 +21,6 @@
 #define COLOR_YELLOW	0x36
 #define COLOR_PINK		0x2D
 #define COLOR_CYAN		0x1A
-
-typedef struct {
-	uint16_t x;
-	uint16_t y;
-	uint16_t w;
-	uint16_t h;
-	uint8_t *data;
-	uint32_t data_len;
-} image_t;
 
 /**
  * @brief Initialize graphics unit

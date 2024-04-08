@@ -1,0 +1,8 @@
+../Core/Src/ui.c:30:6:UI_Init	8	static
+../Core/Src/ui.c:35:6:UI_Reset_Laptime	16	static
+../Core/Src/ui.c:39:6:UI_Update_Laptime	32	static
+../Core/Src/ui.c:51:6:UI_Update_BatteryPct	32	static
+../Core/Src/ui.c:70:6:UI_Update_RPM	24	static
+../Core/Src/ui.c:77:6:UI_Update_WheelTemps	32	static
+../Core/Src/ui.c:89:6:UI_Update_Speedometer	24	static
+../Core/Src/ui.c:94:6:UI_Update_CoolingTemp	24	static

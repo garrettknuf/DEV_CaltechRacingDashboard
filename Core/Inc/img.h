@@ -11,5 +11,17 @@
 #define INC_IMG_H_
 
 #define CALTECH_RACING_LOGO_IMG_LEN 18923
+#define DRIVE_MODE_BACKGROUND_IMG_LEN 76800
+
+//extern uint8_t drive_mode_background_img[];
+
+typedef struct {
+	uint16_t x;
+	uint16_t y;
+	uint16_t w;
+	uint16_t h;
+	uint8_t *data;
+	uint32_t data_len;
+} image_t;
 
 #endif /* INC_IMG_H_ */

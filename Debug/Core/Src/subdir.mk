@@ -18,7 +18,8 @@ C_SRCS += \
 ../Core/Src/syscalls.c \
 ../Core/Src/sysmem.c \
 ../Core/Src/system_stm32f4xx.c \
-../Core/Src/timer.c 
+../Core/Src/timer.c \
+../Core/Src/ui.c 
 
 OBJS += \
 ./Core/Src/button.o \
@@ -34,7 +35,8 @@ OBJS += \
 ./Core/Src/syscalls.o \
 ./Core/Src/sysmem.o \
 ./Core/Src/system_stm32f4xx.o \
-./Core/Src/timer.o 
+./Core/Src/timer.o \
+./Core/Src/ui.o 
 
 C_DEPS += \
 ./Core/Src/button.d \
@@ -50,7 +52,8 @@ C_DEPS += \
 ./Core/Src/syscalls.d \
 ./Core/Src/sysmem.d \
 ./Core/Src/system_stm32f4xx.d \
-./Core/Src/timer.d 
+./Core/Src/timer.d \
+./Core/Src/ui.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -60,7 +63,7 @@ Core/Src/%.o Core/Src/%.su: ../Core/Src/%.c Core/Src/subdir.mk
 clean: clean-Core-2f-Src
 
 clean-Core-2f-Src:
-	-$(RM) ./Core/Src/button.d ./Core/Src/button.o ./Core/Src/button.su ./Core/Src/demo.d ./Core/Src/demo.o ./Core/Src/demo.su ./Core/Src/display.d ./Core/Src/display.o ./Core/Src/display.su ./Core/Src/gfx.d ./Core/Src/gfx.o ./Core/Src/gfx.su ./Core/Src/img.d ./Core/Src/img.o ./Core/Src/img.su ./Core/Src/init.d ./Core/Src/init.o ./Core/Src/init.su ./Core/Src/led.d ./Core/Src/led.o ./Core/Src/led.su ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/main.su ./Core/Src/stm32f4xx_hal_msp.d ./Core/Src/stm32f4xx_hal_msp.o ./Core/Src/stm32f4xx_hal_msp.su ./Core/Src/stm32f4xx_it.d ./Core/Src/stm32f4xx_it.o ./Core/Src/stm32f4xx_it.su ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/syscalls.su ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/sysmem.su ./Core/Src/system_stm32f4xx.d ./Core/Src/system_stm32f4xx.o ./Core/Src/system_stm32f4xx.su ./Core/Src/timer.d ./Core/Src/timer.o ./Core/Src/timer.su
+	-$(RM) ./Core/Src/button.d ./Core/Src/button.o ./Core/Src/button.su ./Core/Src/demo.d ./Core/Src/demo.o ./Core/Src/demo.su ./Core/Src/display.d ./Core/Src/display.o ./Core/Src/display.su ./Core/Src/gfx.d ./Core/Src/gfx.o ./Core/Src/gfx.su ./Core/Src/img.d ./Core/Src/img.o ./Core/Src/img.su ./Core/Src/init.d ./Core/Src/init.o ./Core/Src/init.su ./Core/Src/led.d ./Core/Src/led.o ./Core/Src/led.su ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/main.su ./Core/Src/stm32f4xx_hal_msp.d ./Core/Src/stm32f4xx_hal_msp.o ./Core/Src/stm32f4xx_hal_msp.su ./Core/Src/stm32f4xx_it.d ./Core/Src/stm32f4xx_it.o ./Core/Src/stm32f4xx_it.su ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/syscalls.su ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/sysmem.su ./Core/Src/system_stm32f4xx.d ./Core/Src/system_stm32f4xx.o ./Core/Src/system_stm32f4xx.su ./Core/Src/timer.d ./Core/Src/timer.o ./Core/Src/timer.su ./Core/Src/ui.d ./Core/Src/ui.o ./Core/Src/ui.su
 
 .PHONY: clean-Core-2f-Src
 
