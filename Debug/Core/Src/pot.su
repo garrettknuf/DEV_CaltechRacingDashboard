@@ -1,0 +1,3 @@
+../Core/Src/pot.c:28:6:Pot_Init	32	static
+../Core/Src/pot.c:50:13:Pot_EventHandler	16	static
+../Core/Src/pot.c:61:6:Pot_Sample	16	static

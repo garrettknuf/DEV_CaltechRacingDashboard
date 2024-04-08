@@ -19,6 +19,7 @@
 #include "led.h"
 #include "gfx.h"
 #include "img.h"
+#include "pot.h"
 #include "timer.h"
 #include "ui.h"
 
@@ -45,6 +46,9 @@ int main(void)
 
 	/* Initialize rotary encoder controllers */
 	Encoder_Init();
+
+	/* Initialize potentiometer controllers */
+	Pot_Init();
 
 	/* Initialize display */
 	Display_Init();

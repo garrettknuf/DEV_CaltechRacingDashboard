@@ -19,6 +19,7 @@ extern TIM_HandleTypeDef htim3;
 
 /* Stop watch variables (seconds) */
 static uint32_t time_elapsed = 0;
+static uint16_t current_ms = 0;
 
 void Timer_EnableInterrupts(void) {
 	HAL_TIM_Base_Start_IT(&htim2);
@@ -30,19 +31,27 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 		// Should be called every 1ms
 		Button_Debounce();
 		Encoder_Debounce();
+
+		// Read ADC every 50 ms
+		if (current_ms % 50 == 0) {
+
+		}
+		current_ms++;
 	} else if (htim == &htim2) {
 		// Should be called every 1s
-
-		// Update lap time on display
 		UI_Update_Laptime(time_elapsed);
 		UI_Update_BatteryPct(78);
 		UI_Update_RPM(2173);
-		UI_Update_WheelTemps(74,71,72,67);
 		UI_Update_Speedometer(69);
-		UI_Update_CoolingTemp(23);
 
-		// add one more second to time elapsed
+		// Update these values every 10 seconds
+		if (time_elapsed % 10 == 0) {
+			UI_Update_WheelTemps(74,71,72,67);
+			UI_Update_CoolingTemp(23);
+		}
+
+		// Add one more second to time elapsed
 		time_elapsed++;
-
+		current_ms = 0;
 	}
 }
