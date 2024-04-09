@@ -27,7 +27,27 @@
  */
 void Gfx_Init(void);
 
-void Gfx_DrawRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint8_t color);
+/**
+ * @brief Draw filled rectangle on display
+ * @param x (uint16_t) - x-coordinate (top-left corner)
+ * @param y (uint16_t) - y-coordinate (top-left corner)
+ * @param w (uint16_t) - width of rectangle
+ * @param h (uint16_t) - height of rectangle
+ * @param color (uint8_t) - color to fill rectangle
+ */
+void Gfx_DrawFilledRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint8_t color);
+
+/**
+ * @brief Draw unfilled rectangle on display
+ * @param x (uint16_t) - x-coordinate (top-left corner)
+ * @param y (uint16_t) - y-coordinate (top-left corner)
+ * @param w (uint16_t) - width of rectangle
+ * @param h (uint16_t) - height of rectangle
+ * @param color (uint8_t) - color to fill rectangle
+ * @param thickness (uint8_t) - stroke thickness
+ */
+void Gfx_DrawUnfilledRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint8_t color, uint8_t thickness);
+
 
 /**
  * @brief Set the background color
@@ -36,27 +56,23 @@ void Gfx_DrawRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint8_t color)
 void Gfx_SetBackground(uint8_t color);
 
 /**
+ * @brief Draw an image on the display with its specified properties
+ * @param img (image_t) - image properties
+ * @param x (uint16_t) - x-coordinate of image
+ * @param y (uint16_t) - y-coordinate of image
+ */
+void Gfx_DrawImage(image_t *img, uint16_t x, uint16_t y);
+
+/**
  * @brief Draw a digit (7-segment display pattern) at a specified position
  * 			with a specified height and color
  * @param x (uint16_t) - top-left x coordinate of digit
  * @param y (uint16_t) - top-left y coordinate of digit
- * @param digit (uint8_t) - value of digit to draw (0 <= digit <= 9) or digit = -1
+ * @param digit (int8_t) - value of digit to draw (0 <= digit <= 9) or digit = -1
  * 							to delete it
  * @param font_height (uint8_t) - height of digit
  * @param color (uint8_t) - color of digit
  */
-void Gfx_DrawDigit(uint16_t x, uint16_t y, uint8_t digit, uint8_t font_height, uint8_t color);
-
-/**
- * @brief Draw an image on the display with its specified properties
- * @param img (image_t) - image properties
- */
-void Gfx_DrawImage(image_t *img);
-
-/**
- * @brief Delete an image from the display (replace with background color)
- * @param img (image_t) - image properties
- */
-void Gfx_DeleteImage(image_t *img);
+void Gfx_Draw7SegDigit(uint16_t x, uint16_t y, int8_t digit, uint8_t font_height, uint8_t color);
 
 #endif /* INC_GFX_H_ */

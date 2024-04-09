@@ -2,11 +2,11 @@ from PIL import Image
 import math
 
 """****************** UPDATE THESE PARAMS FOR YOUR IMAGE ********************"""
-image_path = 'DashboardBackground.png'
-output_file_path = 'dashboard_background.txt'
-variable_name = 'dashboard_background_img'
-width = 480
-height = 320
+image_path = 'small_eight.png'
+output_file_path = 'small_eight.txt'
+variable_name = 'small_eight_img'
+width = 20
+height = 24
 """**************************************************************************"""
 
 if __name__ == "__main__":
@@ -26,8 +26,6 @@ if __name__ == "__main__":
     # Make sure in RGB mode
     img = img.convert('RGB')
 
-    img.save(variable_name + '_new.jpg')
-
     # Initialize empty pixel data list
     pixel_list = ""
 
@@ -41,7 +39,10 @@ if __name__ == "__main__":
             r, g, b = img.getpixel((x, y))
             
             # Convert 8-bit RGB to 3-bit RGB
-            pixel_list += ('1' if r >= 127 else '0')
+            # pixel_list += ('1' if r >= 127 else '0')
+            # pixel_list += ('1' if g >= 127 else '0')
+            # pixel_list += ('1' if b >= 127 else '0')
+            pixel_list += '0'
             pixel_list += ('1' if g >= 127 else '0')
             pixel_list += ('1' if b >= 127 else '0')
 
@@ -50,7 +51,7 @@ if __name__ == "__main__":
         pixel_list += '000'
 
     # Data array stores pixel data in byte format that will be sent over SPI
-    # Each byte: 0-0-r1-g1-b2-r2-g2-b2
+    # Each byte: 0-0-r1-g1-b1-r2-g2-b2
     data_arr = "\t"
 
     # Concatenate string that will consist of bytes for data array

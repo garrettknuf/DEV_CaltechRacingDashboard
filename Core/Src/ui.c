@@ -16,11 +16,11 @@ static uint32_t lap_time_start = 0;
 #define BATTERY_THRESHOLD_PCT_YELLOW 60
 #define BATTERY_THRESHOLD_PCT_RED	 30
 
+#define WHEEL_TEMP_THRESHOLD 80
+
 /* Get reference to background image */
 extern uint8_t drive_mode_background_img[];
 image_t background_img = {
-	.x = 0,
-	.y = 0,
 	.w = 480,
 	.h = 320,
 	.data = drive_mode_background_img,
@@ -29,7 +29,7 @@ image_t background_img = {
 
 void UI_Init(void) {
 	Gfx_SetBackground(COLOR_BLACK);
-	Gfx_DrawImage(&background_img);
+	Gfx_DrawImage(&background_img, 0, 0);
 }
 
 void UI_Reset_Laptime(uint32_t time_elapsed) {
@@ -40,12 +40,12 @@ void UI_Update_Laptime(uint32_t time_elapsed) {
 	uint8_t minutes = (time_elapsed - lap_time_start) / 60;
 	uint8_t seconds = (time_elapsed - lap_time_start) % 60;
 
-	Gfx_DrawDigit(325, 260, minutes / 10, 40, COLOR_PINK);
-	Gfx_DrawDigit(355, 260, minutes % 10, 40, COLOR_PINK);
-	Gfx_DrawDigit(405, 260, seconds / 10, 40, COLOR_PINK);
-	Gfx_DrawDigit(435, 260, seconds % 10, 40, COLOR_PINK);
-	Gfx_DrawRect(390, 270, 5, 5, COLOR_PINK);
-	Gfx_DrawRect(390, 290, 5, 5, COLOR_PINK);
+	Gfx_Draw7SegDigit(325, 260, minutes / 10, 40, COLOR_PINK);
+	Gfx_Draw7SegDigit(355, 260, minutes % 10, 40, COLOR_PINK);
+	Gfx_Draw7SegDigit(405, 260, seconds / 10, 40, COLOR_PINK);
+	Gfx_Draw7SegDigit(435, 260, seconds % 10, 40, COLOR_PINK);
+	Gfx_DrawFilledRect(390, 270, 5, 5, COLOR_PINK);
+	Gfx_DrawFilledRect(390, 290, 5, 5, COLOR_PINK);
 }
 
 void UI_Update_BatteryPct(uint8_t battery_pct) {
@@ -59,40 +59,43 @@ void UI_Update_BatteryPct(uint8_t battery_pct) {
 	}
 
 	uint8_t width = battery_pct * BATTERY_ICON_WIDTH / 100;
-	Gfx_DrawRect(295, 15, width, BATTERY_ICON_HEIGHT, color);
-	Gfx_DrawRect(295+width, 15, BATTERY_ICON_WIDTH - width, BATTERY_ICON_HEIGHT, COLOR_BLACK);
+	Gfx_DrawFilledRect(295, 15, width, BATTERY_ICON_HEIGHT, color);
+	Gfx_DrawFilledRect(295+width, 15, BATTERY_ICON_WIDTH - width, BATTERY_ICON_HEIGHT, COLOR_BLACK);
 
 	/* Battery */
-	Gfx_DrawDigit(390, 20, battery_pct / 10, 25, COLOR_GREEN);
-	Gfx_DrawDigit(410, 20, battery_pct % 10, 25, COLOR_GREEN);
+	Gfx_Draw7SegDigit(390, 20, battery_pct / 10, 25, COLOR_GREEN);
+	Gfx_Draw7SegDigit(410, 20, battery_pct % 10, 25, COLOR_GREEN);
 }
 
 void UI_Update_RPM(uint16_t rpm) {
-	Gfx_DrawDigit(195, 260, rpm / 1000, 40, COLOR_GREEN);
-	Gfx_DrawDigit(220, 260, (rpm / 100) % 10, 40, COLOR_GREEN);
-	Gfx_DrawDigit(245, 260, (rpm % 100) / 10, 40, COLOR_GREEN);
-	Gfx_DrawDigit(270, 260, rpm % 10, 40, COLOR_GREEN);
+	Gfx_Draw7SegDigit(195, 260, rpm / 1000, 40, COLOR_GREEN);
+	Gfx_Draw7SegDigit(220, 260, (rpm / 100) % 10, 40, COLOR_GREEN);
+	Gfx_Draw7SegDigit(245, 260, (rpm % 100) / 10, 40, COLOR_GREEN);
+	Gfx_Draw7SegDigit(270, 260, rpm % 10, 40, COLOR_GREEN);
 }
 
 void UI_Update_WheelTemps(uint8_t front_left, uint8_t front_right,
 		  	  	  	  	  uint8_t back_left, uint8_t back_right) {
-	Gfx_DrawDigit( 10, 230, front_left / 10, 25, COLOR_CYAN);
-	Gfx_DrawDigit( 30, 230, front_left % 10, 25, COLOR_CYAN);
-	Gfx_DrawDigit( 90, 230, front_right / 10, 25, COLOR_CYAN);
-	Gfx_DrawDigit(110, 230, front_right % 10, 25, COLOR_CYAN);
-	Gfx_DrawDigit( 10, 280, back_left / 10, 25, COLOR_CYAN);
-	Gfx_DrawDigit( 30, 280, back_left % 10, 25, COLOR_CYAN);
-	Gfx_DrawDigit( 90, 280, back_right / 10, 25, COLOR_CYAN);
-	Gfx_DrawDigit(110, 280, back_right % 10, 25, COLOR_CYAN);
+	Gfx_Draw7SegDigit(5, 230, front_left / 10, 25, COLOR_CYAN);
+	Gfx_Draw7SegDigit(30, 230, front_left % 10, 25, COLOR_CYAN);
+
+	Gfx_Draw7SegDigit(87, 230, front_right / 10, 25, COLOR_CYAN);
+	Gfx_Draw7SegDigit(112, 230, front_right % 10, 25, COLOR_CYAN);
+
+	Gfx_Draw7SegDigit(5, 280, back_left / 10, 25, COLOR_CYAN);
+	Gfx_Draw7SegDigit(30, 280, back_left % 10, 25, COLOR_CYAN);
+
+	Gfx_Draw7SegDigit(87, 280, back_right / 10, 25, COLOR_CYAN);
+	Gfx_Draw7SegDigit(112, 280, back_right % 10, 25, COLOR_CYAN);
 }
 
 void UI_Update_Speedometer(uint8_t speed) {
-	Gfx_DrawDigit(150, 70, speed / 10, 120, COLOR_YELLOW);
-	Gfx_DrawDigit(240, 70, speed % 10, 120, COLOR_YELLOW);
+	Gfx_Draw7SegDigit(150, 70, speed / 10, 120, COLOR_YELLOW);
+	Gfx_Draw7SegDigit(240, 70, speed % 10, 120, COLOR_YELLOW);
 }
 
 void UI_Update_CoolingTemp(uint8_t temp) {
-	Gfx_DrawDigit(60, 20, temp / 10, 25, COLOR_CYAN);
-	Gfx_DrawDigit(80, 20, temp % 10, 25, COLOR_CYAN);
+	Gfx_Draw7SegDigit(60, 15, temp / 10, 25, COLOR_CYAN);
+	Gfx_Draw7SegDigit(81, 15, temp % 10, 25, COLOR_CYAN);
 }
 

@@ -1,7 +1,7 @@
 ../Core/Src/gfx.c:46:6:Gfx_Init	8	static
 ../Core/Src/gfx.c:50:6:Gfx_SetBackground	24	static
-../Core/Src/gfx.c:55:6:Gfx_DrawRect	24	static
-../Core/Src/gfx.c:63:6:Gfx_DrawDigit	40	static
-../Core/Src/gfx.c:118:6:Gfx_DrawNumber	32	static
-../Core/Src/gfx.c:123:6:Gfx_DrawImage	24	static
-../Core/Src/gfx.c:131:6:Gfx_DeleteImage	32	static
+../Core/Src/gfx.c:55:6:Gfx_DrawFilledRect	24	static
+../Core/Src/gfx.c:68:6:Gfx_DrawUnfilledRect	32	static
+../Core/Src/gfx.c:75:6:Gfx_DrawNumber	32	static
+../Core/Src/gfx.c:80:6:Gfx_DrawImage	24	static
+../Core/Src/gfx.c:89:6:Gfx_Draw7SegDigit	40	static

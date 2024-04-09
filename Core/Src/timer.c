@@ -46,8 +46,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 
 		// Update these values every 10 seconds
 		if (time_elapsed % 10 == 0) {
-			UI_Update_WheelTemps(74,71,72,67);
-			UI_Update_CoolingTemp(23);
+			UI_Update_WheelTemps(71,73,68,72);
+			UI_Update_CoolingTemp(88);
 		}
 
 		// Add one more second to time elapsed

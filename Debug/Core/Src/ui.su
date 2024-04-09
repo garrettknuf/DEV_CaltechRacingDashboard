@@ -4,5 +4,5 @@
 ../Core/Src/ui.c:51:6:UI_Update_BatteryPct	32	static
 ../Core/Src/ui.c:70:6:UI_Update_RPM	24	static
 ../Core/Src/ui.c:77:6:UI_Update_WheelTemps	32	static
-../Core/Src/ui.c:89:6:UI_Update_Speedometer	24	static
-../Core/Src/ui.c:94:6:UI_Update_CoolingTemp	24	static
+../Core/Src/ui.c:92:6:UI_Update_Speedometer	24	static
+../Core/Src/ui.c:97:6:UI_Update_CoolingTemp	24	static
