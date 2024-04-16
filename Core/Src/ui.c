@@ -95,7 +95,7 @@ void UI_Update_Speedometer(uint8_t speed) {
 }
 
 void UI_Update_CoolingTemp(uint8_t temp) {
-	Gfx_Draw7SegDigit(60, 15, temp / 10, 25, COLOR_CYAN);
-	Gfx_Draw7SegDigit(81, 15, temp % 10, 25, COLOR_CYAN);
+	Gfx_Draw7SegDigit(59, 15, temp / 10, 25, COLOR_CYAN);
+	Gfx_Draw7SegDigit(80, 15, temp % 10, 25, COLOR_CYAN);
 }
 

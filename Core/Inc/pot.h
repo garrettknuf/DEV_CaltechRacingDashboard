@@ -12,6 +12,8 @@
 typedef enum {
 	POT_ID_1,
 	POT_ID_2,
+	POT_ID_3,
+	POT_ID_4,
 	POT_CNT
 } pot_id_t;
 
@@ -21,7 +23,7 @@ typedef enum {
 void Pot_Init(void);
 
 /**
- * @brief Samples next pot. Should be called every 20ms.
+ * @brief Samples next pot. Should be called every 50ms.
  */
 void Pot_Sample(void);
 

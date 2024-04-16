@@ -53,7 +53,7 @@ void Gfx_SetBackground(uint8_t color) {
 }
 
 void Gfx_DrawFilledRect(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint8_t color) {
-	if (x + w > DISPLAY_MAX_X || y + h > DISPLAY_MAX_Y) {
+	if (x + w > DISPLAY_SIZE_X || y + h > DISPLAY_SIZE_Y) {
 		/* Do nothing if arguments are invalid */
 		return;
 	}

@@ -13,6 +13,10 @@ typedef enum {
 	LED_ID_1,
 	LED_ID_2,
 	LED_ID_3,
+	LED_ID_4,
+	LED_ID_5,
+	LED_ID_DEBUG1,
+	LED_ID_DEBUG2,
 	LED_CNT		// total number of LEDs
 } led_id_t;
 

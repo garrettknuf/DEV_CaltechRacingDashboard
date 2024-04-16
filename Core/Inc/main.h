@@ -77,6 +77,10 @@ void Error_Handler(void);
 #define SWO_GPIO_Port GPIOB
 #define SPI_CS_Pin GPIO_PIN_4
 #define SPI_CS_GPIO_Port GPIOB
+#define ENCODER_B_Pin GPIO_PIN_8
+#define ENCODER_B_GPIO_Port GPIOB
+#define ENCODER_A_Pin GPIO_PIN_9
+#define ENCODER_A_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

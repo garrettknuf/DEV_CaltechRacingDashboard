@@ -10,6 +10,7 @@
 #include "encoder.h"
 #include "led.h"
 #include "gfx.h"
+#include "pot.h"
 #include "ui.h"
 #include "stm32f4xx_hal.h"
 
@@ -32,9 +33,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 		Button_Debounce();
 		Encoder_Debounce();
 
-		// Read ADC every 50 ms
+		// Read different ADC every 50 ms
 		if (current_ms % 50 == 0) {
-
+			Pot_Sample();
 		}
 		current_ms++;
 	} else if (htim == &htim2) {
@@ -47,7 +48,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 		// Update these values every 10 seconds
 		if (time_elapsed % 10 == 0) {
 			UI_Update_WheelTemps(71,73,68,72);
-			UI_Update_CoolingTemp(88);
+			UI_Update_CoolingTemp(23);
 		}
 
 		// Add one more second to time elapsed

@@ -24,18 +24,20 @@ typedef struct {
 } button_t;
 
 /* Statically allocate button controllers */
-static button_t btn1;
+static button_t btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8;
 
 /* List of button handles (order must match button_id_t enum) */
 static button_t *button_list[BTN_CNT] = {&btn1};
 
 void Button_Init(void) {
-	btn1 = (button_t) {
-		.id = BTN_ID_1,
-		.counter = 0,
-		.port = B1_GPIO_Port,
-		.pin = B1_Pin
-	};
+	btn1 = (button_t) {.id = BTN_ID_1, .counter = 0, .port = B1_GPIO_Port, .pin = B1_Pin};
+	btn2 = (button_t) {.id = BTN_ID_2, .counter = 0, .port = 0, .pin = 0};
+	btn3 = (button_t) {.id = BTN_ID_3, .counter = 0, .port = 0, .pin = 0};
+	btn4 = (button_t) {.id = BTN_ID_4, .counter = 0, .port = 0, .pin = 0};
+	btn5 = (button_t) {.id = BTN_ID_5, .counter = 0, .port = 0, .pin = 0};
+	btn6 = (button_t) {.id = BTN_ID_6, .counter = 0, .port = 0, .pin = 0};
+	btn7 = (button_t) {.id = BTN_ID_DEBUG1, .counter = 0, .port = 0, .pin = 0};
+	btn8 = (button_t) {.id = BTN_ID_DEBUG2, .counter = 0, .port = 0, .pin = 0};
 }
 
 /**
@@ -46,6 +48,20 @@ static void Button_PressedHandler(button_id_t id) {
 	switch (id) {
 		case BTN_ID_1:
 			Led_Toggle(LED_ID_1);
+			break;
+		case BTN_ID_2:
+			break;
+		case BTN_ID_3:
+			break;
+		case BTN_ID_4:
+			break;
+		case BTN_ID_5:
+			break;
+		case BTN_ID_6:
+			break;
+		case BTN_ID_DEBUG1:
+			break;
+		case BTN_ID_DEBUG2:
 			break;
 		default:
 			break;
@@ -59,6 +75,20 @@ static void Button_PressedHandler(button_id_t id) {
 static void Button_ReleasedHandler(button_id_t id) {
 	switch (id) {
 		case BTN_ID_1:
+			break;
+		case BTN_ID_2:
+			break;
+		case BTN_ID_3:
+			break;
+		case BTN_ID_4:
+			break;
+		case BTN_ID_5:
+			break;
+		case BTN_ID_6:
+			break;
+		case BTN_ID_DEBUG1:
+			break;
+		case BTN_ID_DEBUG2:
 			break;
 		default:
 			break;
